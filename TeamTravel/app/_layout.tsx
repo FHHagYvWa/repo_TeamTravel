@@ -6,8 +6,9 @@ import {FontAwesome, MaterialIcons} from "@expo/vector-icons";
 SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
     const [loaded, error] = useFonts({
-        'nunito-regular':require('../assets/fonts/Nunito-Regular.ttf'),
-        'nunito-bold':require('../assets/fonts/Nunito-Bold.ttf'),
+        'libre-regular':require('../assets/fonts/LibreBaskerville-Regular.ttf'),
+        'raleway-regular':require('../assets/fonts/Raleway-Regular.ttf'),
+        'raleway-italic':require('../assets/fonts/Raleway-Italic.ttf'),
     });
 
     // Expo Router uses Error Boundaries to catch errors in the navigation tree.

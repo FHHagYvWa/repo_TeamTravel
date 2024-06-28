@@ -22,5 +22,6 @@ const styles = StyleSheet.create({
         color: '#191919',
         fontSize: 20,
         fontWeight: 'bold',
+        fontFamily: "LibreBaskerville-Regular"
     }
 });

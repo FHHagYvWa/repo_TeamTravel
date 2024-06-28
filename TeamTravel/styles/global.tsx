@@ -5,9 +5,10 @@ export const globalStyles = StyleSheet.create({
         flex: 1
     },
     titleText: {
-        fontFamily: "nunito-bold",
-        fontSize: 18,
-        color: '#333'
+        fontFamily: "LibreBaskerville-Regular",
+        fontSize: 16,
+        color: '#333',
+        marginBottom: 2
     },
     paragraph: {
         marginVertical: 8,
@@ -27,6 +28,28 @@ export const globalStyles = StyleSheet.create({
         marginTop: 6,
         textAlign: 'center',
     },
+    card: {
+        backgroundColor: '#f0e9de',
+        padding: 10,
+        borderColor: '#ddd',
+        borderWidth: 1,
+        borderRadius: 15,
+        shadowColor: 'black',
+        shadowOffset: {width: 4, height: 4},
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        marginBottom: 10,
+        marginRight: 10
+    },
+    cardImage: {
+       width: "auto",
+       height: 80,
+        marginBottom: 7
+    },
+    cardDescription: {
+        fontFamily: "Raleway-Italic",
+        fontStyle: 'italic'
+    }
 });
 
 
