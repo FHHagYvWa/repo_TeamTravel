@@ -37,7 +37,7 @@ function TabsLayout() {
             },
             headerTintColor: '#333',
             headerTitleStyle: {
-                fontFamily: 'LibreBaskerville-Bold',
+                fontFamily: 'libre-bold',
                 fontWeight: 'bold',
                 headerTitleAlign: 'center'
             },

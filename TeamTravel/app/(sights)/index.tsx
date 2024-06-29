@@ -116,7 +116,7 @@ export default function HomePage (){
                         </View>
                         <Text>Sehenswürdigkeiten: </Text>
                         <StatusBar style="auto" />
-                        <FlatList data={sights} renderItem={({item})=>(
+                        <FlatList styles={styles.list} data={sights} renderItem={({item})=>(
                             <TouchableOpacity style={globalStyles.card} onPress={()=>router.push({pathname:item.key,params:item})}>
 
                                 <Image source={require('../../assets/icon.png')} style={globalStyles.cardImage}></Image>
@@ -139,6 +139,9 @@ export default function HomePage (){
 const styles = StyleSheet.create({
     safe:{
         flex: 1,
+    },
+    list:{
+        marginBottom: 200,
     },
     searchContainer:{
         width: '80%',
