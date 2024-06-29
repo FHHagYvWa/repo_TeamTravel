@@ -33,7 +33,7 @@ export default function HomePage (){
     ]);
 
 
-    /*test for api city id fetch -> SUCCESSFUL LOGGING*/
+    /*City Id von API fetchen -> SUCCESSFUL LOGGING*/
     const submitHandler = (text:string) => {
         text = text.replace(/\s+/g, '-').toLowerCase();
 
@@ -50,9 +50,44 @@ export default function HomePage (){
                 });
         };
 
+
+
+
         getCityIdFromApi().then(place_id => {
             console.log(place_id);
+            const placeId = place_id;
+            console.log("place id: " + placeId);
+
+
+            /*Sehenswürdigkeiten fetchen -> SUCCESSFUL LOGGING*/
+            const getSightsFromApi = () => {
+                return fetch(`https://api.geoapify.com/v2/places?categories=tourism.sights&filter=place:${placeId}&limit=20&apiKey=5b21eb9631084a9fb9cf8bfab2cf5e93`)
+                    .then(response => response.json())
+                    .then(json => {
+                        return json.features;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            };
+
+            getSightsFromApi().then(features => {
+                console.log(features);
+            });
         });
+
+
+
+
+
+        /*TODO - rausfinden, wie man alle sights rein rendert*/
+        setSight(prevSights => {
+            return [
+                {text:text, description: "Example", key:Math.random().toString()},
+                ...prevSights
+            ]
+        });
+
     }
 
 
