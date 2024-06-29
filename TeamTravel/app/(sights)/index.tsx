@@ -14,6 +14,8 @@ import {globalStyles} from "../../styles/global";
 import {useState} from "react";
 import Header from "../../components/header";
 import {StatusBar} from "expo-status-bar";
+import Detail from "../../components/detail";
+import {navigate} from "expo-router/build/global-state/routing";
 
 type Sight = {
     title: string,
@@ -28,6 +30,7 @@ export default function HomePage (){
         {title: "Basilica de la Sagrada Familia", description: "Lovely description number 2", key: "2"},
 
     ]);
+
     return (
         <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
             <SafeAreaView style={styles.safe}>
@@ -67,6 +70,8 @@ export default function HomePage (){
 
     );
 }
+
+
 
 const styles = StyleSheet.create({
     safe:{
