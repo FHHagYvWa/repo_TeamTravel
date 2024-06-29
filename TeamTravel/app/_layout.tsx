@@ -7,6 +7,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
     const [loaded, error] = useFonts({
         'libre-regular':require('../assets/fonts/LibreBaskerville-Regular.ttf'),
+        'libre-bold':require('../assets/fonts/LibreBaskerville-Bold.ttf'),
         'raleway-regular':require('../assets/fonts/Raleway-Regular.ttf'),
         'raleway-italic':require('../assets/fonts/Raleway-Italic.ttf'),
     });
@@ -34,8 +35,9 @@ function TabsLayout() {
             headerStyle: {
                 backgroundColor: '#ffc50a',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#333',
             headerTitleStyle: {
+                fontFamily: 'LibreBaskerville-Bold',
                 fontWeight: 'bold',
                 headerTitleAlign: 'center'
             },
