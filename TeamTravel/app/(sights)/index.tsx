@@ -14,7 +14,7 @@ import {globalStyles} from "../../styles/global";
 import {useState} from "react";
 import Header from "../../components/header";
 import {StatusBar} from "expo-status-bar";
-import Detail from "../../components/detail";
+
 import {navigate} from "expo-router/build/global-state/routing";
 import SearchSights from "../../components/search";
 
@@ -27,8 +27,8 @@ type Sight = {
 export default function HomePage (){
 
     const [sights, setSight] = useState<Sight[]>([
-        {title: "Basilica de la Sagrada Familia", description: "Lovely description", key: "1"},
-        {title: "Basilica de la Sagrada Familia", description: "Lovely description number 2", key: "2"},
+        {title: "Basilica de la Sagrada Familia", description: "Lovely description", opening_hours: "Mo-Fr 08:00 - 16:00", key: "1"},
+        {title: "Basilica de la Sagrada Familia", description: "Lovely description number 2", opening_hours: "Mo-Fr 08:00 - 16:00",key: "2"},
 
     ]);
 
@@ -64,6 +64,14 @@ export default function HomePage (){
                 return fetch(`https://api.geoapify.com/v2/places?categories=tourism.sights&filter=place:${placeId}&limit=20&apiKey=5b21eb9631084a9fb9cf8bfab2cf5e93`)
                     .then(response => response.json())
                     .then(json => {
+                        /*Daten setzen mit neuen Sehenswürdigkeiten - mit setSight gesetzt*/
+                        const sightItems = json.features.map(item => ({
+                            title: item.properties.name,
+                            description: item.properties.address_line2,
+                            opening_hours: item.properties.opening_hours,
+                            key: Math.random().toString()
+                        }));
+                        setSight(sightItems);
                         return json.features;
                     })
                     .catch(error => {
@@ -73,20 +81,14 @@ export default function HomePage (){
 
             getSightsFromApi().then(features => {
                 console.log(features);
+                const featuresArray = features;
+
             });
         });
 
 
 
 
-
-        /*TODO - rausfinden, wie man alle sights rein rendert*/
-        setSight(prevSights => {
-            return [
-                {text:text, description: "Example", key:Math.random().toString()},
-                ...prevSights
-            ]
-        });
 
     }
 
@@ -104,17 +106,9 @@ export default function HomePage (){
 
                         <View style={styles.searchContainer}>
 
-                            {/*TEST with search.tsx*/}
+                            {/*aus search.tsx*/}
                             <SearchSights submitHandler={submitHandler}/>
 
-
-
-                            <TextInput style={globalStyles.searchInput} placeholder={'Mein Reiseziel'}
-                                       /*value={text} onChangeText={setText}*//>
-                            <Button  title={'Suchen'} /*style={styles.button} */ /*onPress={()=>props.submitHandler(text)}*//>
-                            <Pressable style={styles.suchButton}>
-                                <Text style={styles.suchButtonText}>Suchen</Text>
-                            </Pressable>
                         </View>
                         <Text>Aktuelles Wetter: </Text>
                         <View style={styles.wetter}>
@@ -147,7 +141,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     searchContainer:{
-        width: '80%'
+        width: '80%',
+        marginBottom: 40,
     }
     ,
     container: {

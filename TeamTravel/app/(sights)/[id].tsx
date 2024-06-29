@@ -9,6 +9,7 @@ export default function SightDetail (){
             <Image source={require('../../assets/icon.png')} style={styles.image}></Image>
             <Text style={styles.titleText}>{item.title}</Text>
             <Text style={styles.description}>{item.description}</Text>
+            <Text style={styles.description}>{item.opening_hours}</Text>
         </View>
     );
 }
@@ -22,7 +23,8 @@ const styles = StyleSheet.create({
         fontFamily: 'libre-regular',
     },
     description: {
-        fontFamily: 'raleway-regular'
+        fontFamily: 'raleway-regular',
+        marginBottom: 10
     },
     image: {
         width: 300,

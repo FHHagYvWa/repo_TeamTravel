@@ -57,7 +57,7 @@ export const globalStyles = StyleSheet.create({
         marginBottom: 7
     },
     cardDescription: {
-        fontFamily: "Raleway-Italic",
+        fontFamily: "raleway-italic",
         fontStyle: 'italic'
     }
 });
