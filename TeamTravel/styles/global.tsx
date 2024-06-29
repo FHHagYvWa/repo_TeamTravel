@@ -5,7 +5,7 @@ export const globalStyles = StyleSheet.create({
         flex: 1
     },
     titleText: {
-        fontFamily: "LibreBaskerville-Regular",
+        fontFamily: "libre-regular",
         fontSize: 16,
         color: '#333',
         marginBottom: 2

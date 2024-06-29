@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     content: {
         padding: 20,
         alignItems: "center",
-        fontFamily: "Raleway-Italic"
+        fontFamily: "raleway-italic"
     },
     input: {
         marginTop: 10,
@@ -121,9 +121,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing: 0.25,
 
-    },
-    titleText: {
-        fontFamily: "LibreBaskerville-Regular",
     },
     wetter: {
         backgroundColor: '#f0e9de',
