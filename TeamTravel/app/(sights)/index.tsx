@@ -16,6 +16,7 @@ import Header from "../../components/header";
 import {StatusBar} from "expo-status-bar";
 import Detail from "../../components/detail";
 import {navigate} from "expo-router/build/global-state/routing";
+import SearchSights from "../../components/search";
 
 type Sight = {
     title: string,
@@ -31,6 +32,30 @@ export default function HomePage (){
 
     ]);
 
+
+    /*test for api city id fetch -> SUCCESSFUL LOGGING*/
+    const submitHandler = (text:string) => {
+        text = text.replace(/\s+/g, '-').toLowerCase();
+
+        const countryName = text;
+        console.log(countryName);
+        const getCityIdFromApi = () => {
+            return fetch(`https://api.geoapify.com/v1/geocode/search?text=${countryName}&limit=1&type=city&format=json&apiKey=5b21eb9631084a9fb9cf8bfab2cf5e93`)
+                .then(response => response.json())
+                .then(json => {
+                    return json.results[0].place_id;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        };
+
+        getCityIdFromApi().then(place_id => {
+            console.log(place_id);
+        });
+    }
+
+
     return (
         <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
             <SafeAreaView style={styles.safe}>
@@ -39,8 +64,17 @@ export default function HomePage (){
 
                     <View style={styles.content}>
                         <Text>Welche Stadt möchtest du erkunden?</Text>
-                        <View>
-                            <TextInput style={styles.input} placeholder={'Mein Reiseziel'}
+
+
+
+                        <View style={styles.searchContainer}>
+
+                            {/*TEST with search.tsx*/}
+                            <SearchSights submitHandler={submitHandler}/>
+
+
+
+                            <TextInput style={globalStyles.searchInput} placeholder={'Mein Reiseziel'}
                                        /*value={text} onChangeText={setText}*//>
                             <Button  title={'Suchen'} /*style={styles.button} */ /*onPress={()=>props.submitHandler(text)}*//>
                             <Pressable style={styles.suchButton}>
@@ -77,6 +111,10 @@ const styles = StyleSheet.create({
     safe:{
         flex: 1,
     },
+    searchContainer:{
+        width: '80%'
+    }
+    ,
     container: {
         padding: 24,
     },
@@ -84,16 +122,6 @@ const styles = StyleSheet.create({
         padding: 20,
         alignItems: "center",
         fontFamily: "raleway-italic"
-    },
-    input: {
-        marginTop: 10,
-        marginBottom: 10,
-        paddingHorizontal: 8,
-        paddingVertical: 6,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
-        backgroundColor: '#ddd',
-        borderRadius: 15
     },
     suchButton: {
         backgroundColor: '#f0e9de',

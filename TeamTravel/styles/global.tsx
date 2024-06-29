@@ -14,6 +14,16 @@ export const globalStyles = StyleSheet.create({
         marginVertical: 8,
         lineHeight: 20
     },
+    searchInput: {
+        marginTop: 10,
+        marginBottom: 10,
+        paddingHorizontal: 8,
+        paddingVertical: 6,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
+        backgroundColor: '#ddd',
+        borderRadius: 15,
+    },
     input: {
         borderWidth: 1,
         borderColor: '#ddd',
