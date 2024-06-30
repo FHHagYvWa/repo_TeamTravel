@@ -6,7 +6,7 @@ export default function SightDetail (){
     let item = useLocalSearchParams();
     return(
         <View style={styles.container}>
-            <Image source={require('../../assets/icon.png')} style={styles.image}></Image>
+            <Image source={item.image ? {uri:item.image.toString()} : require('../../assets/icon.png').toString()} style={styles.image}></Image>
             <Text style={styles.titleText}>{item.title}</Text>
             <Text style={styles.description}>{item.description}</Text>
             <Text style={styles.description}>{item.opening_hours}</Text>

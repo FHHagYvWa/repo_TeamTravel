@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     Keyboard,
     SafeAreaView,
-    TouchableWithoutFeedback, Button, TextInput, Image
+    TouchableWithoutFeedback, Button, TextInput, Image, ActivityIndicator
 } from "react-native";
 import {router} from "expo-router";
 import {globalStyles} from "../../styles/global";
@@ -27,18 +27,26 @@ type Sight = {
 export default function HomePage (){
 
     const [sights, setSight] = useState<Sight[]>([
-        {title: "Basilica de la Sagrada Familia", description: "Lovely description", opening_hours: "Mo-Fr 08:00 - 16:00", key: "1"},
-        {title: "Basilica de la Sagrada Familia", description: "Lovely description number 2", opening_hours: "Mo-Fr 08:00 - 16:00",key: "2"},
+        {title: "Basilica de la Sagrada Familia", description: "Lovely description", opening_hours: "Mo-Fr 08:00 - 16:00", image: require('../../assets/icon.png'), key: "1"},
+        {title: "Basilica de la Sagrada Familia", description: "Lovely description number 2", opening_hours: "Mo-Fr 08:00 - 16:00", image: require('../../assets/icon.png'), key: "2"},
 
     ]);
 
 
-    /*City Id von API fetchen -> SUCCESSFUL LOGGING*/
+    /*zeigen, dass daten gerade laden*/
+    const [loadingSpinner, setSpinner] = useState(false);
+
+
+    /*wenn Suchen Button geklickt wird - City Id von API fetchen -> SUCCESSFUL LOGGING*/
     const submitHandler = (text:string) => {
         text = text.replace(/\s+/g, '-').toLowerCase();
 
         const countryName = text;
         console.log(countryName);
+
+        /*show spinner*/
+        setSpinner(true);
+
         const getCityIdFromApi = () => {
             return fetch(`https://api.geoapify.com/v1/geocode/search?text=${countryName}&limit=1&type=city&format=json&apiKey=5b21eb9631084a9fb9cf8bfab2cf5e93`)
                 .then(response => response.json())
@@ -68,10 +76,17 @@ export default function HomePage (){
                         const sightItems = json.features.map(item => ({
                             title: item.properties.name,
                             description: item.properties.address_line2,
-                            opening_hours: item.properties.opening_hours,
+                            opening_hours: item.properties.opening_hours ? item.properties.opening_hours : item.properties.datasource.raw.opening_hours,
+                            image: item.properties.wiki_and_media.image,
                             key: Math.random().toString()
                         }));
+                        console.log(typeof (sightItems[3].image));
                         setSight(sightItems);
+
+                        /*loadingSpinner deaktivieren*/
+                        setSpinner(false);
+
+
                         return json.features;
                     })
                     .catch(error => {
@@ -97,6 +112,7 @@ export default function HomePage (){
         <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
             <SafeAreaView style={styles.safe}>
                 <View style={globalStyles.container}>
+                    <StatusBar style="auto" />
                     {/* header rendered through expo navigation*/}
 
                     <View style={styles.content}>
@@ -109,17 +125,20 @@ export default function HomePage (){
                             {/*aus search.tsx*/}
                             <SearchSights submitHandler={submitHandler}/>
 
+                            {/*loadingSpinner platzieren*/}
+                            {loadingSpinner && <ActivityIndicator size="large" color="#ffc50a" styles={styles.loader} />}
+
                         </View>
                         <Text>Aktuelles Wetter: </Text>
                         <View style={styles.wetter}>
                             <Text>Platzhalter für Wetter aus API</Text>
                         </View>
                         <Text>Sehenswürdigkeiten: </Text>
-                        <StatusBar style="auto" />
+
                         <FlatList styles={styles.list} data={sights} renderItem={({item})=>(
                             <TouchableOpacity style={globalStyles.card} onPress={()=>router.push({pathname:item.key,params:item})}>
 
-                                <Image source={require('../../assets/icon.png')} style={globalStyles.cardImage}></Image>
+                                <Image source={item.image ? {uri:item.image.toString()} : require('../../assets/icon.png').toString()} style={globalStyles.cardImage}></Image>
                                 <Text style={globalStyles.titleText}>{item.title}</Text>
                                 <Text style={globalStyles.cardDescription}>{item.description}</Text>
 
@@ -139,6 +158,9 @@ export default function HomePage (){
 const styles = StyleSheet.create({
     safe:{
         flex: 1,
+    },
+    loader:{
+        paddingTop: 100,
     },
     list:{
         marginBottom: 200,

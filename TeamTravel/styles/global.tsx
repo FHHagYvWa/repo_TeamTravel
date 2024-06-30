@@ -53,7 +53,7 @@ export const globalStyles = StyleSheet.create({
     },
     cardImage: {
        width: "auto",
-       height: 80,
+       height: 150,
         marginBottom: 7
     },
     cardDescription: {
