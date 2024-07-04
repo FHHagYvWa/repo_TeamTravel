@@ -24,6 +24,12 @@ type Sight = {
     key: string
 }
 
+type Weather = {
+    temp_c: string,
+    description: string
+    image: string
+}
+
 export default function HomePage() {
 
     const [sights, setSight] = useState<Sight[]>([
@@ -43,6 +49,13 @@ export default function HomePage() {
         },
 
     ]);
+
+    const [weather, setWeather] = useState<Weather[]>([
+        {
+            temp_c: "0",
+            description: "No location selected",
+            image: ""
+        }]);
 
     /*zeigen, dass daten gerade laden*/
     const [loadingSpinner, setSpinner] = useState(false);
@@ -69,6 +82,29 @@ export default function HomePage() {
 
         /*show spinner*/
         setSpinner(true);
+
+        const getWeatherFromApi = () => {
+            return fetch(`http://api.weatherapi.com/v1/current.json?key=f5184d81eafa4f98a4a122942242806&q=${countryName}`)
+                .then(response => response.json())
+                .then(json => {
+                    /* Filtern und Daten setzen mit neuem Wetter */
+
+                    const getImage = getProperty('icon');
+                    const weatherItems = {
+                        temp_c: json.current.temp_c,
+                        description: json.current.condition.text,
+                        image: json.current.condition.icon
+                    };
+
+                    console.log(weatherItems.temp_c);
+                    console.log(weather.map(item => weatherItems.temp_c + "°C " + weatherItems.description))
+
+                    setWeather([weatherItems]);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        };
 
         const getCityIdFromApi = () => {
             return fetch(`https://api.geoapify.com/v1/geocode/search?text=${countryName}&limit=1&type=city&format=json&apiKey=5b21eb9631084a9fb9cf8bfab2cf5e93`)
@@ -126,6 +162,9 @@ export default function HomePage() {
                 const featuresArray = features;
 
             });
+            getWeatherFromApi().then(weather => {
+                console.log(weather);
+            });
         });
     }
 
@@ -148,10 +187,15 @@ export default function HomePage() {
                             {loadingSpinner && <ActivityIndicator size="large" color="#ffc50a" styles={styles.loader}/>}
 
                         </View>
-                        <Text>Current Weather: </Text>
+                        <Text>Current Weather:{}</Text>
                         <View style={styles.wetter}>
-                            <Text>Platzhalter für Wetter aus API</Text>
-                        </View>
+                            <Text>{weather.map(
+                                item => item.temp_c + "°C " + "\n"+ item.description
+                            )}</Text>
+                            <Image
+                                source={weather.map(item => item.image ? {uri: "https:" + item.image} : require('../../assets/Placeholder.png').toString())}
+                                style={globalStyles.cardImage}></Image>
+                           </View>
                         <Text>Sights: </Text>
 
                         {/* TODO show info if no sights are found */}
