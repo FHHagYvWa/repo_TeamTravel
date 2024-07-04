@@ -101,6 +101,7 @@ export default function HomePage() {
                                 description: item.properties.address_line2,
                                 opening_hours: item.properties.opening_hours ? item.properties.opening_hours : item.properties.datasource.raw.opening_hours,
                                 image: getImage(item) || null,//item?.properties?.wiki_and_media?.image || item?.properties?.datasource?.raw?.image,
+                                website: item.properties.website,
                                 key: Math.random().toString()
                             }));
 
@@ -136,7 +137,7 @@ export default function HomePage() {
                     {/* header rendered through expo navigation*/}
 
                     <View style={styles.content}>
-                        <Text>Welche Stadt möchtest du erkunden?</Text>
+                        <Text>Which city would you like to explore?</Text>
                         <View style={styles.searchContainer}>
 
                             {/* TODO maybe (nur wenn easy möglich) ein X am Ende der Zeile zum Löschen des gesamten Inhalts */}
@@ -147,11 +148,11 @@ export default function HomePage() {
                             {loadingSpinner && <ActivityIndicator size="large" color="#ffc50a" styles={styles.loader}/>}
 
                         </View>
-                        <Text>Aktuelles Wetter: </Text>
+                        <Text>Current Weather: </Text>
                         <View style={styles.wetter}>
                             <Text>Platzhalter für Wetter aus API</Text>
                         </View>
-                        <Text>Sehenswürdigkeiten: </Text>
+                        <Text>Sights: </Text>
 
                         {/* TODO show info if no sights are found */}
                         {/* also if features ist [] */}
@@ -169,7 +170,7 @@ export default function HomePage() {
                                 ELSE display placeholder image
                                  */}
                                 <Image
-                                    source={item?.image && (typeof item?.image === "string" || item?.image instanceof String) && !item?.image?.includes("wikipedia.org/wiki/") && !item?.image?.includes("wikimedia.org/wiki/") && (item?.image?.includes(".jpg") || item?.image?.includes(".jpeg") || item?.image?.includes(".png")) ? {uri: item.image.toString()} : require('../../assets/icon.png').toString()}
+                                    source={item?.image && (typeof item?.image === "string" || item?.image instanceof String) && !item?.image?.includes("wikipedia.org/wiki/") && !item?.image?.includes("wikimedia.org/wiki/") && (item?.image?.includes(".jpg") || item?.image?.includes(".jpeg") || item?.image?.includes(".png")) ? {uri: item.image.toString()} : require('../../assets/Placeholder.png').toString()}
                                     style={globalStyles.cardImage}></Image>
                                 <Text style={globalStyles.titleText}>{item.title}</Text>
                                 <Text style={globalStyles.cardDescription}>{item.description}</Text>

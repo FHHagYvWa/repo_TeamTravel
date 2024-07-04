@@ -1,25 +1,66 @@
-import {View, Text, StyleSheet, Image} from "react-native";
+import {View, Text, StyleSheet, Image, Linking, TouchableOpacity} from "react-native";
 import {useLocalSearchParams} from "expo-router";
 
 export default function SightDetail (){
 
     let item = useLocalSearchParams();
-    return(
+    return (
         <View style={styles.container}>
-            <Image source={item.image ? {uri:item.image.toString()} : require('../../assets/icon.png').toString()} style={styles.image}></Image>
+            <Image
+                source={item.image ? {uri: item.image.toString()} : require('../../assets/Placeholder.png').toString()}
+                style={styles.image}></Image>
             <Text style={styles.titleText}>{item.title}</Text>
             <Text style={styles.description}>{item.description}</Text>
-            {/* TODO show heading "Opening hours:" if opening hours are specified*/}
 
+            {/* show opening hours ONLY if they are specified*/}
+            <Opening item={item}/>
 
-            {/* TODO show opening hours ONLY if they are specified*/}
-            {/* weil manchmal steht "none"*/}
-            <Text style={styles.description}>{item.opening_hours}</Text>
 
             {/* TODO show link to website if available*/}
+            <OpenWebsite item={item}/>
         </View>
     );
 }
+
+const Opening = ({item}) => {
+
+
+    if (item.opening_hours && item.opening_hours != 'none') {
+        return (
+            <View>
+                <Text>Opening Hours: </Text>
+                <Text>{item.opening_hours}</Text>
+            </View>
+        );
+    }
+
+    return null;
+};
+
+const OpenWebsite = ({item})=>{
+    if (item.website ) {
+        return (
+            <View>
+                <Text>Website: </Text>
+                <Text>{item.website}</Text>
+            </View>
+        );
+    }
+
+    return null;
+}
+
+const openWebsite = (url) => {
+    Linking.canOpenURL(url)
+        .then((supported) => {
+            if (supported) {
+                Linking.openURL(url);
+            } else {
+                console.log("Don't know how to open URI: " + url);
+            }
+        })
+        .catch((err) => console.error('An error occurred', err));
+};
 
 const styles = StyleSheet.create({
     container:{

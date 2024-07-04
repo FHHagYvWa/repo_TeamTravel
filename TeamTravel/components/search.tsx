@@ -15,9 +15,9 @@ export default function SearchSights(props: SearchSightsProps){
 
     return(
         <View style={styles.searchContainer}>
-            <TextInput style={globalStyles.searchInput} placeholder={'Mein Reiseziel...'}
+            <TextInput style={globalStyles.searchInput} placeholder={'My destination...'}
                 value={text} onChangeText={setText}/>
-            <Button  title='Suchen' color='#ffc50a' onPress={()=>props.submitHandler(text)}/>
+            <Button  title='Search' color='#ffc50a' onPress={()=>props.submitHandler(text)}/>
         </View>
     );
 }
