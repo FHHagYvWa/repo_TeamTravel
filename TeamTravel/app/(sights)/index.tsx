@@ -143,6 +143,7 @@ export default function HomePage (){
                                 <Text style={globalStyles.cardDescription}>{item.description}</Text>
 
 
+
                             </TouchableOpacity>
                         )}/>
                     </View>
