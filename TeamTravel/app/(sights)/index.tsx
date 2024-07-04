@@ -36,6 +36,18 @@ export default function HomePage (){
     /*zeigen, dass daten gerade laden*/
     const [loadingSpinner, setSpinner] = useState(false);
 
+    const getProperty = property => {
+        const getter = o => {
+            if (o && typeof o === 'object') {
+                return Object.entries(o)
+                    .map(([key, value]) => key === property ? value : getter(value))
+                    .filter(Boolean)
+                    .shift()
+            }
+        }
+
+        return getter
+    }
 
     /*wenn Suchen Button geklickt wird - City Id von API fetchen -> SUCCESSFUL LOGGING*/
     const submitHandler = (text:string) => {
@@ -72,20 +84,28 @@ export default function HomePage (){
                 return fetch(`https://api.geoapify.com/v2/places?categories=tourism.sights&filter=place:${placeId}&limit=20&apiKey=5b21eb9631084a9fb9cf8bfab2cf5e93`)
                     .then(response => response.json())
                     .then(json => {
-                        /*Daten setzen mit neuen Sehenswürdigkeiten - mit setSight gesetzt*/
-                        const sightItems = json.features.map(item => ({
-                            title: item.properties.name,
-                            description: item.properties.address_line2,
-                            opening_hours: item.properties.opening_hours ? item.properties.opening_hours : item.properties.datasource.raw.opening_hours,
-                            image: item.properties.wiki_and_media.image,
-                            key: Math.random().toString()
-                        }));
-                        console.log(typeof (sightItems[3].image));
+                        /* Filtern und Daten setzen mit neuen Sehenswürdigkeiten */
+
+                        const getImage = getProperty('image');
+                        const sightItems = json.features
+                            .filter(item => item.properties.name)  // Filtert Elemente ohne "name" Attribut aus
+                            .map(item => ({
+                                title: item.properties.name,
+                                description: item.properties.address_line2,
+                                opening_hours: item.properties.opening_hours ? item.properties.opening_hours : item.properties.datasource.raw.opening_hours,
+                                image: getImage(item) || null,//item?.properties?.wiki_and_media?.image || item?.properties?.datasource?.raw?.image,
+                                key: Math.random().toString()
+                            }));
+
+                       // console.log(typeof (sightItems[3].image));
+                        // console.log(typeof (sightItems[3]));
+
+                        //console.log(typeof (sightItems[0].image));
+
                         setSight(sightItems);
 
-                        /*loadingSpinner deaktivieren*/
+                        /* loadingSpinner deaktivieren */
                         setSpinner(false);
-
 
                         return json.features;
                     })
@@ -138,7 +158,7 @@ export default function HomePage (){
                         <FlatList styles={styles.list} data={sights} renderItem={({item})=>(
                             <TouchableOpacity style={globalStyles.card} onPress={()=>router.push({pathname:item.key,params:item})}>
 
-                                <Image source={item.image ? {uri:item.image.toString()} : require('../../assets/icon.png').toString()} style={globalStyles.cardImage}></Image>
+                                <Image source={item?.image && (typeof item?.image === "string" || item?.image instanceof String ) && !item?.image?.includes("wikipedia.org/wiki/") && !item?.image?.includes("wikimedia.org/wiki/") && (item?.image?.includes(".jpg") || item?.image?.includes(".jpeg") || item?.image?.includes(".png") ) ? {uri:item.image.toString()} : require('../../assets/icon.png').toString()} style={globalStyles.cardImage}></Image>
                                 <Text style={globalStyles.titleText}>{item.title}</Text>
                                 <Text style={globalStyles.cardDescription}>{item.description}</Text>
 
