@@ -1,5 +1,6 @@
 import {View, Text, StyleSheet, Image, Linking, TouchableOpacity} from "react-native";
 import {useLocalSearchParams} from "expo-router";
+import { A } from '@expo/html-elements';
 
 export default function SightDetail (){
 
@@ -13,23 +14,21 @@ export default function SightDetail (){
             <Text style={styles.description}>{item.description}</Text>
 
             {/* show opening hours ONLY if they are specified*/}
-            <Opening item={item}/>
+            <OpeningHours item={item}/>
 
 
-            {/* TODO show link to website if available*/}
+            {/*show link to website if available*/}
             <OpenWebsite item={item}/>
         </View>
     );
 }
 
-const Opening = ({item}) => {
-
-
+const OpeningHours = ({item}) => {
     if (item.opening_hours && item.opening_hours != 'none') {
         return (
             <View>
-                <Text>Opening Hours: </Text>
-                <Text>{item.opening_hours}</Text>
+                <Text style={styles.openingTitle}>Opening Hours: </Text>
+                <Text style={styles.description}>{item.opening_hours}</Text>
             </View>
         );
     }
@@ -41,8 +40,7 @@ const OpenWebsite = ({item})=>{
     if (item.website ) {
         return (
             <View>
-                <Text>Website: </Text>
-                <Text>{item.website}</Text>
+                <A href={item.website} style={styles.website}>Click here to open the Website</A>
             </View>
         );
     }
@@ -50,17 +48,6 @@ const OpenWebsite = ({item})=>{
     return null;
 }
 
-const openWebsite = (url) => {
-    Linking.canOpenURL(url)
-        .then((supported) => {
-            if (supported) {
-                Linking.openURL(url);
-            } else {
-                console.log("Don't know how to open URI: " + url);
-            }
-        })
-        .catch((err) => console.error('An error occurred', err));
-};
 
 const styles = StyleSheet.create({
     container:{
@@ -68,14 +55,24 @@ const styles = StyleSheet.create({
         padding: 24,
     },
     titleText: {
-        fontFamily: 'libre-regular',
+        fontFamily: 'libre-bold',
     },
     description: {
         fontFamily: 'raleway-regular',
         marginBottom: 10
     },
+    openingTitle: {
+        fontFamily: 'raleway-bold',
+        fontWeight: 'bold',
+        marginBottom: 5
+    },
+    website: {
+        fontFamily: 'raleway-italic',
+        marginBottom: 10
+    },
     image: {
         width: 300,
-        height: 150
+        height: 150,
+        marginBottom: 7
     }
 });

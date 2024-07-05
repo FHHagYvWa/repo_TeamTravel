@@ -10,6 +10,7 @@ export default function RootLayout() {
         'libre-bold':require('../assets/fonts/LibreBaskerville-Bold.ttf'),
         'raleway-regular':require('../assets/fonts/Raleway-Regular.ttf'),
         'raleway-italic':require('../assets/fonts/Raleway-Italic.ttf'),
+        'raleway-bold':require('../assets/fonts/Raleway-Bold.ttf'),
     });
 
     // Expo Router uses Error Boundaries to catch errors in the navigation tree.

@@ -17,6 +17,7 @@ import {StatusBar} from "expo-status-bar";
 
 import {navigate} from "expo-router/build/global-state/routing";
 import SearchSights from "../../components/search";
+import {A} from "@expo/html-elements";
 
 type Sight = {
     title: string,
@@ -176,7 +177,7 @@ export default function HomePage() {
                     {/* header rendered through expo navigation*/}
 
                     <View style={styles.content}>
-                        <Text>Which city would you like to explore?</Text>
+                        <Text style={styles.setFont}>Which city would you like to explore?</Text>
                         <View style={styles.searchContainer}>
 
                             {/* TODO maybe (nur wenn easy möglich) ein X am Ende der Zeile zum Löschen des gesamten Inhalts */}
@@ -187,19 +188,20 @@ export default function HomePage() {
                             {loadingSpinner && <ActivityIndicator size="large" color="#ffc50a" styles={styles.loader}/>}
 
                         </View>
-                        <Text>Current Weather:{}</Text>
+                        <Text style={styles.subHeadings}>Current Weather:{}</Text>
                         <View style={styles.wetter}>
                             <Text>{weather.map(
                                 item => item.temp_c + "°C " + "\n"+ item.description
                             )}</Text>
                             <Image
                                 source={weather.map(item => item.image ? {uri: "https:" + item.image} : require('../../assets/Placeholder.png').toString())}
-                                style={globalStyles.cardImage}></Image>
+                                style={styles.weatherImage}></Image>
                            </View>
-                        <Text>Sights: </Text>
+                        <Text style={styles.subHeadings}>Sights: </Text>
 
                         {/* TODO show info if no sights are found */}
                         {/* also if features ist [] */}
+                        {/*<SightsReturned features={item}/>*/}
 
                         <FlatList styles={styles.list} data={sights} renderItem={({item}) => (
                             <TouchableOpacity style={globalStyles.card}
@@ -226,6 +228,19 @@ export default function HomePage() {
         </TouchableWithoutFeedback>
 
     );
+}
+
+const SightsReturned = ({features})=>{
+    if (features.length && features.length < 0 ) {
+        return (
+            <View>
+                <Text>No sights could be found for your desired location. Tip: When searching for
+                    a larger city like New York, try searching for specific parts of the city instead (e.g. Queens)</Text>
+            </View>
+        );
+    }
+
+    return null;
 }
 
 const styles = StyleSheet.create({
@@ -275,6 +290,7 @@ const styles = StyleSheet.create({
         lineHeight: 21,
         fontWeight: 'bold',
         letterSpacing: 0.25,
+        fontFamily: 'raleway-regular'
     },
     wetter: {
         backgroundColor: '#f0e9de',
@@ -282,6 +298,19 @@ const styles = StyleSheet.create({
         borderColor: '#ddd',
         borderWidth: 1,
         borderRadius: 15,
+        marginBottom: 30,
+        height: 100
+    },
+    weatherImage: {
+        height: 40
+    },
+    subHeadings: {
         marginBottom: 10,
+        fontFamily: 'libre-regular',
+        fontSize: 16,
+        color: '#333',
+    },
+    setFont: {
+        fontFamily: 'raleway-regular'
     }
 })
