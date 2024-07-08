@@ -55,7 +55,7 @@ export default function HomePage() {
         {
             temp_c: "0",
             description: "No location selected",
-            image: ""
+            image: require('../../assets/Placeholder.png')
         }]);
 
     /*zeigen, dass daten gerade laden*/
