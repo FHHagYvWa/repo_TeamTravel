@@ -34,20 +34,7 @@ type Weather = {
 export default function HomePage() {
 
     const [sights, setSight] = useState<Sight[]>([
-        {
-            title: "Basilica de la Sagrada Familia",
-            description: "Lovely description",
-            opening_hours: "Mo-Fr 08:00 - 16:00",
-            image: require('../../assets/icon.png'),
-            key: "1"
-        },
-        {
-            title: "Basilica de la Sagrada Familia",
-            description: "Lovely description number 2",
-            opening_hours: "Mo-Fr 08:00 - 16:00",
-            image: require('../../assets/icon.png'),
-            key: "2"
-        },
+
 
     ]);
 
@@ -169,6 +156,7 @@ export default function HomePage() {
         });
     }
 
+
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <SafeAreaView style={styles.safe}>
@@ -203,25 +191,33 @@ export default function HomePage() {
                         {/* also if features ist [] */}
                         {/*<SightsReturned features={item}/>*/}
 
-                        <FlatList styles={styles.list} data={sights} renderItem={({item}) => (
-                            <TouchableOpacity style={globalStyles.card}
-                                              onPress={() => router.push({pathname: item.key, params: item})}>
+                        {/*wenn sights leer - zeige Infotext, ansonsten die Sights*/}
+                        {sights.length === 0 ?
+                            (<View style={styles.noData}>
+                                <Text style={styles.noSightText}>There is no sight data available.</Text>
+                                <Text style={styles.noSightText}>Please select a new city.</Text>
+                            </View>
+                                ) :
 
-                                {/*
-                                IF image is available
-                                AND image is a string
-                                AND does not include any of specified url segments (img links are not standardized, can not be displayed because of link type e.g. wikipedia article) not all invalids covered (weil do wird ma oid, wenn ma jeden link bei jedem sight in jeder stadt checken müsste)
-                                AND includes image file extension
-                                THEN display image
-                                ELSE display placeholder image
-                                 */}
-                                <Image
-                                    source={item?.image && (typeof item?.image === "string" || item?.image instanceof String) && !item?.image?.includes("wikipedia.org/wiki/") && !item?.image?.includes("wikimedia.org/wiki/") && (item?.image?.includes(".jpg") || item?.image?.includes(".jpeg") || item?.image?.includes(".png")) ? {uri: item.image.toString()} : require('../../assets/Placeholder.png').toString()}
-                                    style={globalStyles.cardImage}></Image>
-                                <Text style={globalStyles.titleText}>{item.title}</Text>
-                                <Text style={globalStyles.cardDescription}>{item.description}</Text>
-                            </TouchableOpacity>
-                        )}/>
+                            (<FlatList styles={styles.list} data={sights} renderItem={({item}) => (
+                                <TouchableOpacity style={globalStyles.card}
+                                                  onPress={() => router.push({pathname: item.key, params: item})}>
+
+                                    {/*
+                                    IF image is available
+                                    AND image is a string
+                                    AND does not include any of specified url segments (img links are not standardized, can not be displayed because of link type e.g. wikipedia article) not all invalids covered (weil do wird ma oid, wenn ma jeden link bei jedem sight in jeder stadt checken müsste)
+                                    AND includes image file extension
+                                    THEN display image
+                                    ELSE display placeholder image
+                                     */}
+                                    <Image
+                                        source={item?.image && (typeof item?.image === "string" || item?.image instanceof String) && !item?.image?.includes("wikipedia.org/wiki/") && !item?.image?.includes("wikimedia.org/wiki/") && (item?.image?.includes(".jpg") || item?.image?.includes(".jpeg") || item?.image?.includes(".png")) ? {uri: item.image.toString()} : require('../../assets/Placeholder.png').toString()}
+                                        style={globalStyles.cardImage}></Image>
+                                    <Text style={globalStyles.titleText}>{item.title}</Text>
+                                    <Text style={globalStyles.cardDescription}>{item.description}</Text>
+                                </TouchableOpacity>
+                            )}/>)}
                     </View>
                 </View>
             </SafeAreaView>
@@ -312,5 +308,14 @@ const styles = StyleSheet.create({
     },
     setFont: {
         fontFamily: 'raleway-regular'
+    },
+    noData: {
+        borderColor: '#ffc50a',
+        borderWidth: 2,
+        borderRadius: 10,
+        padding: 10,
+    },
+    noSightText: {
+        textAlign: "center",
     }
 })
