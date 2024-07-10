@@ -40,14 +40,14 @@ export default function Translator() {
                 return fetch(`https://api-free.deepl.com/v2/translate?auth_key=6b8228fb-b44e-490e-b596-6901359a65ae:fx&text=${origin_text}&source_lang=${source_lang}&target_lang=${target_lang}`)
                     .then(response => response.json())
                     .then(json => {
-                        /* Filtern und Daten setzen mit neuem Wetter */
+                        /* Daten setzen für Übersetzung */
                         const translationItems = {
                             text: json.translations[0].text
                         };
 
-                        console.log(json.translations[0].text);
 
-                        setTranslation([translationItems.text]);
+                        setTranslation([json.translations[0].text]);
+                        console.log(translation[0]);
                     })
                     .catch(error => {
                         console.error(error);
@@ -55,7 +55,7 @@ export default function Translator() {
             };
 
             getTranslationFromApi().then(translations => {
-                console.log("hahahahaa" + translations.text);
+                console.log(translations.text);
             });
 
         }
@@ -67,7 +67,7 @@ export default function Translator() {
                         <TranslateInput submitHandler={submitHandler}/>
                         <View style={styles.translateView}>
                             <Text style={globalStyles.titleText}>Your translation:</Text>
-                            <Text style={styles.translated}>{translation}</Text>
+                            <Text style={styles.translated}>{translation.text}</Text>
                         </View>
                     </View>
                 </SafeAreaView>
