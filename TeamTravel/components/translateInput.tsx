@@ -72,11 +72,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
 
-
-    pickerWrapper: {
-        width: '100%',
-        marginBottom: 20,
-    },
     label: {
         fontSize: 16,
         marginBottom: 8,
