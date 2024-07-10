@@ -16,7 +16,7 @@ export default function TranslateInput (props:TranslateProps){
     const [startLanguage, setStartLanguage] = useState("EN");
 
     //const für select picker der Zielsprache
-    const [selectedLanguage, setSelectedLanguage] = useState("EN");
+    const [selectedLanguage, setSelectedLanguage] = useState("ES");
 
 
     return(
@@ -24,7 +24,7 @@ export default function TranslateInput (props:TranslateProps){
             <View style={styles.searchContainer}>
 
                 <View>
-                    <Text style={styles.label}>Select source language:</Text>
+                    <Text style={styles.label}>Translate from:</Text>
                     <View style={styles.pickerStyle}>
 
                         <Picker
@@ -39,7 +39,7 @@ export default function TranslateInput (props:TranslateProps){
                             <Picker.Item label="Italian" value="IT" />
                         </Picker>
                     </View>
-                    <Text style={styles.label}>Select target language:</Text>
+                    <Text style={styles.label}>Translate to:</Text>
                     <View style={styles.pickerStyle}>
                         <Picker
                             selectedValue={selectedLanguage}
