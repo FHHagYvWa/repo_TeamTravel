@@ -7,7 +7,7 @@ import {useState} from "react";
 import TranslateInput from "../components/translateInput";
 import * as Speech from 'expo-speech';
 
-import {FontAwesome, MaterialIcons} from "@expo/vector-icons";
+import {MaterialIcons} from "@expo/vector-icons";
 
 type Translation = {
     text: string
