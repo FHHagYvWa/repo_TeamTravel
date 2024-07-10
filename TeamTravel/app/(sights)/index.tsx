@@ -184,7 +184,7 @@ export default function HomePage() {
                             <Image
                                 source={weather.map(item => item.image ? {uri: "https:" + item.image} : require('../../assets/Placeholder.png').toString())}
                                 style={styles.weatherImage}></Image>
-                           </View>
+                        </View>
                         <Text style={styles.subHeadings}>Sights: </Text>
 
                         {/* TODO show info if no sights are found */}
@@ -260,7 +260,8 @@ const styles = StyleSheet.create({
     content: {
         padding: 20,
         alignItems: "center",
-        fontFamily: "raleway-italic"
+        fontFamily: "raleway-italic",
+        marginBottom: 320,
     },
     suchButton: {
         backgroundColor: '#f0e9de',
