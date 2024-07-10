@@ -1,16 +1,27 @@
 import {
     View, Text, StyleSheet, TextInput, Button, ActivityIndicator, Keyboard, SafeAreaView,
-    TouchableWithoutFeedback, ScrollView
+    TouchableWithoutFeedback, ScrollView, TouchableOpacity
 } from "react-native";
 import {globalStyles} from "../styles/global";
 import {useState} from "react";
 import TranslateInput from "../components/translateInput";
+import * as Speech from 'expo-speech';
+
+import {FontAwesome, MaterialIcons} from "@expo/vector-icons";
 
 type Translation = {
     text: string
 }
 
 export default function Translator() {
+    //const für die Sprache bei Speech
+    const [targetLanguage, setTargetLanguage] = useState("EN");
+
+    //const für Speech Ausgabe
+    const speak = () => {
+        const thingToSay = translation[0].text;
+        Speech.speak(thingToSay, {language: targetLanguage});
+    };
 
     const [translation, setTranslation] = useState<Translation[]>([
         {
@@ -37,6 +48,9 @@ export default function Translator() {
             setSpinner(true);
 
 
+            //target language für speech setzen
+            setTargetLanguage(trgt_lang);
+
             const getTranslationFromApi = () => {
                 return fetch(`https://api-free.deepl.com/v2/translate?auth_key=6b8228fb-b44e-490e-b596-6901359a65ae:fx&text=${origin_text}&source_lang=${source_lang}&target_lang=${target_lang}`)
                     .then(response => response.json())
@@ -59,6 +73,8 @@ export default function Translator() {
 
         }
     }
+
+
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <SafeAreaView style={styles.safe}>
@@ -68,6 +84,9 @@ export default function Translator() {
                         <View style={styles.translateView}>
                             <Text style={globalStyles.titleText}>Your translation:</Text>
                             <Text style={styles.translated}>{translation[0].text}</Text>
+                            <TouchableOpacity onPress={speak}>
+                                <MaterialIcons name="volume-up" size={48} color={'#ffc50a'}/>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </ScrollView>
@@ -85,10 +104,10 @@ const styles = StyleSheet.create({
         borderColor: '#ffc50a',
         borderWidth: 2,
         borderRadius: 15,
-        marginBottom: 30,
+        marginBottom: 10,
         height: "auto"
     },
     translateView: {
         marginTop: 30
-    }
+    },
 })
