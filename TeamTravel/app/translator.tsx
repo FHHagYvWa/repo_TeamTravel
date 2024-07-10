@@ -82,10 +82,11 @@ export default function Translator() {
                         <TranslateInput submitHandler={submitHandler}/>
                         <View style={styles.translateView}>
                             <Text style={globalStyles.titleText}>Your translation:</Text>
-                            <Text style={styles.translated}>{translation[0].text}</Text>
                             <TouchableOpacity onPress={speak}>
                                 <MaterialIcons name="volume-up" size={48} color={'#ffc50a'}/>
                             </TouchableOpacity>
+                            <Text style={styles.translated}>{translation[0].text}</Text>
+
                         </View>
                     </View>
                 </ScrollView>

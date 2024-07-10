@@ -1,7 +1,8 @@
-import {View, Text, StyleSheet, TextInput, Button} from "react-native";
+import {View, Text, StyleSheet, TextInput, Button, TouchableOpacity} from "react-native";
 import {globalStyles} from "../styles/global";
 import {useState} from "react";
 import {Picker} from '@react-native-picker/picker';
+import {MaterialIcons} from "@expo/vector-icons";
 
 type TranslateProps = {
     submitHandler: (text:string, src_lang:string, target_lang:string) => void;
@@ -18,6 +19,9 @@ export default function TranslateInput (props:TranslateProps){
     //const für select picker der Zielsprache
     const [selectedLanguage, setSelectedLanguage] = useState("ES");
 
+    const handleDelete = () => {
+        setText('');
+    };
 
     return(
         <View>
@@ -56,10 +60,16 @@ export default function TranslateInput (props:TranslateProps){
 
                 </View>
 
-                <TextInput multiline = {true}
-                           numberOfLines = {10} style={globalStyles.translateInput} placeholder={'Your text...'}
-                           value={text} onChangeText={setText}/>
-                <Button  title='Translate' color='#ffc50a' onPress={()=>props.submitHandler(text, startLanguage, selectedLanguage)}/>
+                <View>
+                    <TextInput multiline = {true}
+                               numberOfLines = {5} style={globalStyles.translateInput} placeholder={'Your text...'}
+                               value={text} onChangeText={setText}/>
+                    <TouchableOpacity onPress={handleDelete}>
+                        <MaterialIcons style={globalStyles.icon} name="delete" size={30} color={'#000'}/>
+                    </TouchableOpacity>
+                    <Button  title='Translate' color='#ffc50a' onPress={()=>props.submitHandler(text, startLanguage, selectedLanguage)}/>
+                </View>
+
             </View>
         </View>
 
@@ -81,5 +91,5 @@ const styles = StyleSheet.create({
         color: '#555',
         fontFamily: 'raleway-regular',
         paddingTop: 10,
-    }
+    },
 })

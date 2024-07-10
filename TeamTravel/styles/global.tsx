@@ -71,6 +71,10 @@ export const globalStyles = StyleSheet.create({
     cardDescription: {
         fontFamily: "raleway-italic",
         fontStyle: 'italic'
+    },
+    icon: {
+        alignSelf: "center",
+        marginBottom: 15
     }
 });
 
