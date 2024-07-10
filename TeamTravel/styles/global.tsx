@@ -24,6 +24,17 @@ export const globalStyles = StyleSheet.create({
         backgroundColor: '#ddd',
         borderRadius: 15,
     },
+    translateInput: {
+        textAlignVertical: 'top',
+        marginTop: 10,
+        marginBottom: 10,
+        paddingHorizontal: 8,
+        paddingVertical: 6,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
+        backgroundColor: '#ddd',
+        borderRadius: 15,
+    },
     input: {
         borderWidth: 1,
         borderColor: '#ddd',
