@@ -34,6 +34,12 @@ const submitHandler = (text: string, src_lang: string, trgt_lang: string) => {
         /*show spinner*/
         setSpinner(true);
 
+<<<<<<< HEAD
+=======
+export default function Translator (){
+    //submit aktion für Translate button
+    const submitHandler = (text: string) => {
+>>>>>>> 9f9c87b76ab486629cd87f0d84e2f3c4b06df503
         //übersetzen des Textes
 
         //Aufruf der Übersetzungs API mit gewählter Sprache
