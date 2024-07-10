@@ -4,7 +4,7 @@ import {useState} from "react";
 import TranslateInput from "../components/translateInput";
 
 
-export default function Translator (props:TranslateProps){
+export default function Translator (){
     //submit aktion für Translate button
     const submitHandler = (text: string) => {
         //übersetzen des Textes
