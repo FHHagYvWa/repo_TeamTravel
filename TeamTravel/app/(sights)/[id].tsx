@@ -1,8 +1,8 @@
-import {View, Text, StyleSheet, Image, Linking, TouchableOpacity} from "react-native";
+import {View, Text, StyleSheet, Image} from "react-native";
 import {useLocalSearchParams} from "expo-router";
-import { A } from '@expo/html-elements';
+import {A} from '@expo/html-elements';
 
-export default function SightDetail (){
+export default function SightDetail() {
 
     let item = useLocalSearchParams();
     return (
@@ -13,11 +13,10 @@ export default function SightDetail (){
             <Text style={styles.titleText}>{item.title}</Text>
             <Text style={styles.description}>{item.description}</Text>
 
-            {/* show opening hours ONLY if they are specified*/}
+            {/* show opening hours ONLY if they are specified */}
             <OpeningHours item={item}/>
 
-
-            {/*show link to website if available*/}
+            {/* show link to website if available */}
             <OpenWebsite item={item}/>
         </View>
     );
@@ -32,25 +31,22 @@ const OpeningHours = ({item}) => {
             </View>
         );
     }
-
     return null;
 };
 
-const OpenWebsite = ({item})=>{
-    if (item.website ) {
+const OpenWebsite = ({item}) => {
+    if (item.website) {
         return (
             <View>
                 <A href={item.website} style={styles.website}>Click here to open the Website</A>
             </View>
         );
     }
-
     return null;
 }
 
-
 const styles = StyleSheet.create({
-    container:{
+    container: {
         backgroundColor: '#f0e9de',
         padding: 24,
     },
