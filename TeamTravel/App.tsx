@@ -1,25 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import {StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableWithoutFeedback, Keyboard} from 'react-native';
-
-import {globalStyles} from "./styles/global";
+import {StatusBar} from 'expo-status-bar';
+import {StyleSheet, Text, View} from 'react-native';
 
 export default function App() {
-  return (
-      <View style={styles.container}>
-        <Text>Open up App.tsx to start working on your app!</Text>
-        <StatusBar style="auto" />
-      </View>
-
-
-  );
+    return (
+        <View>
+            <Text>Open up App.tsx to start working on your app!</Text>
+            <StatusBar style="auto"/>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  safe:{
-    flex: 1,
-  },
-  content:{
-    padding: 40,
-  }
+    safe: {
+        flex: 1,
+    },
+    content: {
+        padding: 40,
+    }
 
 });
