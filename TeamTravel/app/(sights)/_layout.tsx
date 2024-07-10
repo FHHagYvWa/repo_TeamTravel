@@ -1,6 +1,5 @@
 import {Stack} from "expo-router";
 
-
 export default function SightsLayout(){
     return(
         <Stack>
@@ -13,7 +12,6 @@ export default function SightsLayout(){
             <Stack.Screen name="[id]" options={{
                 headerTitle: "Sights Details"
             }}/>
-
         </Stack>
     );
 }
