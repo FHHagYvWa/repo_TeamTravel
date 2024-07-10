@@ -24,7 +24,9 @@ export default function TranslateInput (props:TranslateProps){
             <View style={styles.searchContainer}>
 
                 <View>
+                    <Text style={styles.label}>Select source language:</Text>
                     <View style={styles.pickerStyle}>
+
                         <Picker
                             selectedValue={startLanguage}
                             onValueChange={(itemValue, itemIndex) =>
@@ -37,6 +39,7 @@ export default function TranslateInput (props:TranslateProps){
                             <Picker.Item label="Italian" value="IT" />
                         </Picker>
                     </View>
+                    <Text style={styles.label}>Select target language:</Text>
                     <View style={styles.pickerStyle}>
                         <Picker
                             selectedValue={selectedLanguage}
@@ -54,7 +57,7 @@ export default function TranslateInput (props:TranslateProps){
                 </View>
 
                 <TextInput multiline = {true}
-                           numberOfLines = {10} style={globalStyles.translateInput} placeholder={'My text...'}
+                           numberOfLines = {10} style={globalStyles.translateInput} placeholder={'Your text...'}
                            value={text} onChangeText={setText}/>
                 <Button  title='Translate' color='#ffc50a' onPress={()=>props.submitHandler(text, startLanguage, selectedLanguage)}/>
             </View>

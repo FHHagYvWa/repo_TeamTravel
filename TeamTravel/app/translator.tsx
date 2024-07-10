@@ -64,9 +64,11 @@ export default function Translator() {
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <SafeAreaView style={styles.safe}>
                     <View style={styles.container}>
-                        <Text>Translate your text here</Text>
                         <TranslateInput submitHandler={submitHandler}/>
-                        <Text>{translation}</Text>
+                        <View style={styles.translateView}>
+                            <Text style={globalStyles.titleText}>Your translation:</Text>
+                            <Text style={styles.translated}>{translation}</Text>
+                        </View>
                     </View>
                 </SafeAreaView>
             </TouchableWithoutFeedback>
@@ -81,5 +83,17 @@ export default function Translator() {
 const styles = StyleSheet.create({
     container: {
         padding: 24,
+    },
+    translated: {
+        backgroundColor: '#f0e9de',
+        padding: 10,
+        borderColor: '#ffc50a',
+        borderWidth: 2,
+        borderRadius: 15,
+        marginBottom: 30,
+        height: "auto"
+    },
+    translateView: {
+        marginTop: 30
     }
 })
