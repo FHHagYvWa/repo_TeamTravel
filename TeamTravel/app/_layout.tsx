@@ -28,8 +28,9 @@ export default function RootLayout() {
         return null;
     }
 
-    return <TabsLayout />;
+    return <TabsLayout/>;
 }
+
 function TabsLayout() {
     return (
         <Tabs screenOptions={{
