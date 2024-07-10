@@ -10,7 +10,6 @@ type Translation = {
     text: string
 }
 
-
 export default function Translator() {
 
     const [translation, setTranslation] = useState<Translation[]>([
@@ -42,14 +41,12 @@ export default function Translator() {
                 return fetch(`https://api-free.deepl.com/v2/translate?auth_key=6b8228fb-b44e-490e-b596-6901359a65ae:fx&text=${origin_text}&source_lang=${source_lang}&target_lang=${target_lang}`)
                     .then(response => response.json())
                     .then(json => {
-                        /* Filtern und Daten setzen mit neuem Wetter */
-                        const translationItems = {
-                            text: json.translations[0].text
-                        };
+                        /* Filtern und Daten setzen mit Übersetzung */
+                        const translationText = json.translations[0].text;
+                        setTranslation([{ text: translationText }]);
 
                         console.log(json.translations[0].text);
 
-                        setTranslation([translationItems.text]);
                     })
                     .catch(error => {
                         console.error(error);
@@ -77,8 +74,6 @@ export default function Translator() {
             </SafeAreaView>
         </TouchableWithoutFeedback>
     );
-
-
 }
 const styles = StyleSheet.create({
     container: {
