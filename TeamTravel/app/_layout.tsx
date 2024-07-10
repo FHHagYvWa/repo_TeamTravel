@@ -47,12 +47,12 @@ function TabsLayout() {
         }}>
             <Tabs.Screen name="(sights)" options={{
                 headerTitle: "TeamTravel",
-                title: "Sehenswürdigkeiten",
+                title: "Sights",
                 tabBarIcon: ({color}) =><FontAwesome name="home" size={28} color={color}/>
             }}/>
             <Tabs.Screen name="translator" options={{
                 headerTitle: "Translation",
-                title: "Übersetzer",
+                title: "Translation",
                 tabBarIcon: ({color}) =><MaterialIcons name="translate" size={28} color={color}/>
             }}/>
         </Tabs>
