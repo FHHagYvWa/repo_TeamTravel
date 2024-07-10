@@ -42,17 +42,21 @@ export default function Translator() {
                     .then(json => {
                         /* Filtern und Daten setzen mit neuem Wetter */
                         const translationItems = {
-                            text: json.translations.text
+                            text: json.translations[0].text
                         };
 
-                        console.log(translationItems.text);
+                        console.log(json.translations[0].text);
 
-                        setTranslation([translationItems]);
+                        setTranslation([translationItems.text]);
                     })
                     .catch(error => {
                         console.error(error);
                     });
             };
+
+            getTranslationFromApi().then(translations => {
+                console.log("hahahahaa" + translations.text);
+            });
 
         }
     }
@@ -62,7 +66,7 @@ export default function Translator() {
                     <View style={styles.container}>
                         <Text>Translate your text here</Text>
                         <TranslateInput submitHandler={submitHandler}/>
-                        <Text></Text>
+                        <Text>{translation}</Text>
                     </View>
                 </SafeAreaView>
             </TouchableWithoutFeedback>

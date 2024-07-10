@@ -13,10 +13,10 @@ export default function TranslateInput (props:TranslateProps){
 
 
     //const für select picker der Ausgangssprache
-    const [startLanguage, setStartLanguage] = useState(null);
+    const [startLanguage, setStartLanguage] = useState("EN");
 
     //const für select picker der Zielsprache
-    const [selectedLanguage, setSelectedLanguage] = useState();
+    const [selectedLanguage, setSelectedLanguage] = useState("EN");
 
 
     return(
@@ -30,11 +30,11 @@ export default function TranslateInput (props:TranslateProps){
                             onValueChange={(itemValue, itemIndex) =>
                                 setStartLanguage(itemValue)
                             }>
-                            <Picker.Item label="English" value="English" />
-                            <Picker.Item label="German" value="German" />
-                            <Picker.Item label="Spanish" value="Spanish" />
-                            <Picker.Item label="French" value="French" />
-                            <Picker.Item label="Italian" value="Italian" />
+                            <Picker.Item label="English" value="EN" />
+                            <Picker.Item label="German" value="DE" />
+                            <Picker.Item label="Spanish" value="ES" />
+                            <Picker.Item label="French" value="FR" />
+                            <Picker.Item label="Italian" value="IT" />
                         </Picker>
                     </View>
                     <View style={styles.pickerStyle}>
@@ -43,11 +43,11 @@ export default function TranslateInput (props:TranslateProps){
                             onValueChange={(itemValue, itemIndex) =>
                                 setSelectedLanguage(itemValue)
                             }>
-                            <Picker.Item label="English" value="English" />
-                            <Picker.Item label="German" value="German" />
-                            <Picker.Item label="Spanish" value="Spanish" />
-                            <Picker.Item label="French" value="French" />
-                            <Picker.Item label="Italian" value="Italian" />
+                            <Picker.Item label="English" value="EN" />
+                            <Picker.Item label="German" value="DE" />
+                            <Picker.Item label="Spanish" value="ES" />
+                            <Picker.Item label="French" value="FR" />
+                            <Picker.Item label="Italian" value="IT" />
                         </Picker>
                     </View>
 
