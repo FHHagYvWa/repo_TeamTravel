@@ -32,7 +32,7 @@ Installieren Sie die Expo Go App auf Ihrem Smartphone über den Google Play Stor
 1. Navigieren Sie in den Ordner TeamTravel.
 2. Öffnen Sie ein Terminal (unter Windows z.B. Rechtsklick und dann "Terminal öffnen").
 3. Führen Sie den Befehl `npm install` aus, um alle benötigten Packages zu installieren.
-4. Führen Sie den Befehl `npx expo start` aus, um die Anwendung zu starten.
+4. Führen Sie den Befehl `npx expo start` aus, um die Anwendung zu starten. WICHTIG: Achten Sie darauf, dass Sie sich mit Ihrem Smartphone und dem PC im gleichen Netzwerk befinden.
 5. Scannen Sie den im Terminal generierten QR-Code mit der Kamera Ihres Smartphones oder über die Expo Go App.
 
 Das Öffnen der Anwendung in Expo Go kann etwas Zeit in Anspruch nehmen.
