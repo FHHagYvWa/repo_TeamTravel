@@ -67,14 +67,14 @@ export default function HomePage() {
         if(text != ""){
             text = text.replace(/\s+/g, '-').toLowerCase();
 
-            const countryName = text;
-            console.log(countryName);
+            const cityName = text;
+            console.log(cityName);
 
             /*show spinner*/
             setSpinner(true);
 
             const getWeatherFromApi = () => {
-                return fetch(`http://api.weatherapi.com/v1/current.json?key=f5184d81eafa4f98a4a122942242806&q=${countryName}`)
+                return fetch(`http://api.weatherapi.com/v1/current.json?key=f5184d81eafa4f98a4a122942242806&q=${cityName}`)
                     .then(response => response.json())
                     .then(json => {
                         /* Filtern und Daten setzen mit neuem Wetter */
@@ -97,7 +97,7 @@ export default function HomePage() {
             };
 
             const getCityIdFromApi = () => {
-                return fetch(`https://api.geoapify.com/v1/geocode/search?text=${countryName}&limit=1&type=city&format=json&apiKey=5b21eb9631084a9fb9cf8bfab2cf5e93`)
+                return fetch(`https://api.geoapify.com/v1/geocode/search?text=${cityName}&limit=1&type=city&format=json&apiKey=5b21eb9631084a9fb9cf8bfab2cf5e93`)
                     .then(response => response.json())
                     .then(json => {
                         return json.results[0].place_id;
@@ -150,11 +150,16 @@ export default function HomePage() {
                 getSightsFromApi().then(features => {
                     console.log(features);
                     const featuresArray = features;
+                    //Wetter nur anzeigen, wenn Sights gefunden werden
+                    if (featuresArray.length != 0){
+                        getWeatherFromApi().then(weather => {
+                            console.log(weather);
+                        });
+                    }
 
                 });
-                getWeatherFromApi().then(weather => {
-                    console.log(weather);
-                });
+
+
             });
         }
         else{
