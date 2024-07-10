@@ -38,6 +38,20 @@ export default function HomePage() {
 
     ]);
 
+    //const für resetten der Sights bei KLcik auf Müll Icon
+    const handleResetSearch = () => {
+        //sights reset
+        setSight([]);
+
+        //Wetter reset
+        const weatherItems = {
+            temp_c: "0",
+            description: "No location selected",
+            image: require('../../assets/Placeholder.png')
+        };
+        setWeather([weatherItems]);
+    };
+
     const [weather, setWeather] = useState<Weather[]>([
         {
             temp_c: "0",
@@ -187,9 +201,8 @@ export default function HomePage() {
                         <Text style={styles.setFont}>Which city would you like to explore?</Text>
                         <View style={styles.searchContainer}>
 
-                            {/* TODO maybe (nur wenn easy möglich) ein X am Ende der Zeile zum Löschen des gesamten Inhalts */}
                             {/*aus search.tsx*/}
-                            <SearchSights submitHandler={submitHandler}/>
+                            <SearchSights submitHandler={submitHandler} resetHandler={handleResetSearch}/>
 
                             {/*loadingSpinner platzieren*/}
                             {loadingSpinner && <ActivityIndicator size="large" color="#ffc50a" styles={styles.loader}/>}
@@ -206,9 +219,6 @@ export default function HomePage() {
                         </View>
                         <Text style={styles.subHeadings}>Sights: </Text>
 
-                        {/* TODO show info if no sights are found */}
-                        {/* also if features ist [] */}
-                        {/*<SightsReturned features={item}/>*/}
 
                         {/*wenn sights leer - zeige Infotext, ansonsten die Sights*/}
                         {sights.length === 0 ?
@@ -245,18 +255,7 @@ export default function HomePage() {
     );
 }
 
-const SightsReturned = ({features})=>{
-    if (features.length && features.length < 0 ) {
-        return (
-            <View>
-                <Text>No sights could be found for your desired location. Tip: When searching for
-                    a larger city like New York, try searching for specific parts of the city instead (e.g. Queens)</Text>
-            </View>
-        );
-    }
 
-    return null;
-}
 
 const styles = StyleSheet.create({
     safe: {
