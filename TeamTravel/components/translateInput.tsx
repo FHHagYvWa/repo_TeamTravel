@@ -79,5 +79,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 8,
         color: '#555',
+        fontFamily: 'raleway-regular',
+        paddingTop: 10,
     }
 })

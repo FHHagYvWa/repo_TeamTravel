@@ -57,7 +57,7 @@ export default function Translator() {
                     .then(json => {
                         /* Daten setzen mit Übersetzung */
                         const translationText = json.translations[0].text;
-                        setTranslation([{ text: translationText }]);
+                        setTranslation([{text: translationText}]);
 
                         console.log(json.translations[0].text);
 
