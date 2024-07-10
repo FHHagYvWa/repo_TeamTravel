@@ -4,9 +4,7 @@ import {useState} from "react";
 import {Picker} from '@react-native-picker/picker';
 
 type TranslateProps = {
-    submitHandler: (text:string) => void;
-    submitHandler: (src_lang:string) => void;
-    submitHandler: (target_lang:string) => void;
+    submitHandler: (text:string, src_lang:string, target_lang:string) => void;
 }
 
 export default function TranslateInput (props:TranslateProps){
