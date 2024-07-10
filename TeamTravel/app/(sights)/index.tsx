@@ -63,97 +63,111 @@ export default function HomePage() {
 
     /*wenn Suchen Button geklickt wird - City Id von API fetchen -> SUCCESSFUL LOGGING*/
     const submitHandler = (text: string) => {
-        text = text.replace(/\s+/g, '-').toLowerCase();
+        //schauen, ob string leer ist, dann nicht fetchen
+        if(text != ""){
+            text = text.replace(/\s+/g, '-').toLowerCase();
 
-        const countryName = text;
-        console.log(countryName);
+            const countryName = text;
+            console.log(countryName);
 
-        /*show spinner*/
-        setSpinner(true);
+            /*show spinner*/
+            setSpinner(true);
 
-        const getWeatherFromApi = () => {
-            return fetch(`http://api.weatherapi.com/v1/current.json?key=f5184d81eafa4f98a4a122942242806&q=${countryName}`)
-                .then(response => response.json())
-                .then(json => {
-                    /* Filtern und Daten setzen mit neuem Wetter */
-
-                    const getImage = getProperty('icon');
-                    const weatherItems = {
-                        temp_c: json.current.temp_c,
-                        description: json.current.condition.text,
-                        image: json.current.condition.icon
-                    };
-
-                    console.log(weatherItems.temp_c);
-                    console.log(weather.map(item => weatherItems.temp_c + "°C " + weatherItems.description))
-
-                    setWeather([weatherItems]);
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        };
-
-        const getCityIdFromApi = () => {
-            return fetch(`https://api.geoapify.com/v1/geocode/search?text=${countryName}&limit=1&type=city&format=json&apiKey=5b21eb9631084a9fb9cf8bfab2cf5e93`)
-                .then(response => response.json())
-                .then(json => {
-                    return json.results[0].place_id;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        };
-
-        getCityIdFromApi().then(place_id => {
-            console.log(place_id);
-            const placeId = place_id;
-            console.log("place id: " + placeId);
-
-            /*Sehenswürdigkeiten fetchen -> SUCCESSFUL LOGGING*/
-            const getSightsFromApi = () => {
-                return fetch(`https://api.geoapify.com/v2/places?categories=tourism.sights&filter=place:${placeId}&limit=20&apiKey=5b21eb9631084a9fb9cf8bfab2cf5e93`)
+            const getWeatherFromApi = () => {
+                return fetch(`http://api.weatherapi.com/v1/current.json?key=f5184d81eafa4f98a4a122942242806&q=${countryName}`)
                     .then(response => response.json())
                     .then(json => {
-                        /* Filtern und Daten setzen mit neuen Sehenswürdigkeiten */
+                        /* Filtern und Daten setzen mit neuem Wetter */
 
-                        const getImage = getProperty('image');
-                        const sightItems = json.features
-                            .filter(item => item.properties.name)  // Filtert Elemente ohne "name" Attribut aus
-                            .map(item => ({
-                                title: item.properties.name,
-                                description: item.properties.address_line2,
-                                opening_hours: item.properties.opening_hours ? item.properties.opening_hours : item.properties.datasource.raw.opening_hours,
-                                image: getImage(item) || null,//item?.properties?.wiki_and_media?.image || item?.properties?.datasource?.raw?.image,
-                                website: item.properties.website,
-                                key: Math.random().toString()
-                            }));
+                        const getImage = getProperty('icon');
+                        const weatherItems = {
+                            temp_c: json.current.temp_c,
+                            description: json.current.condition.text,
+                            image: json.current.condition.icon
+                        };
 
-                        // console.log(typeof (sightItems[3].image));
-                        // console.log(typeof (sightItems[3]));
+                        console.log(weatherItems.temp_c);
+                        console.log(weather.map(item => weatherItems.temp_c + "°C " + weatherItems.description))
 
-                        //console.log(typeof (sightItems[0].image));
-
-                        setSight(sightItems);
-
-                        /* loadingSpinner deaktivieren */
-                        setSpinner(false);
-
-                        return json.features;
+                        setWeather([weatherItems]);
                     })
                     .catch(error => {
                         console.error(error);
                     });
             };
-            getSightsFromApi().then(features => {
-                console.log(features);
-                const featuresArray = features;
 
+            const getCityIdFromApi = () => {
+                return fetch(`https://api.geoapify.com/v1/geocode/search?text=${countryName}&limit=1&type=city&format=json&apiKey=5b21eb9631084a9fb9cf8bfab2cf5e93`)
+                    .then(response => response.json())
+                    .then(json => {
+                        return json.results[0].place_id;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            };
+
+            getCityIdFromApi().then(place_id => {
+                console.log(place_id);
+                const placeId = place_id;
+                console.log("place id: " + placeId);
+
+                /*Sehenswürdigkeiten fetchen -> SUCCESSFUL LOGGING*/
+                const getSightsFromApi = () => {
+                    return fetch(`https://api.geoapify.com/v2/places?categories=tourism.sights&filter=place:${placeId}&limit=20&apiKey=5b21eb9631084a9fb9cf8bfab2cf5e93`)
+                        .then(response => response.json())
+                        .then(json => {
+                            /* Filtern und Daten setzen mit neuen Sehenswürdigkeiten */
+
+                            const getImage = getProperty('image');
+                            const sightItems = json.features
+                                .filter(item => item.properties.name)  // Filtert Elemente ohne "name" Attribut aus
+                                .map(item => ({
+                                    title: item.properties.name,
+                                    description: item.properties.address_line2,
+                                    opening_hours: item.properties.opening_hours ? item.properties.opening_hours : item.properties.datasource.raw.opening_hours,
+                                    image: getImage(item) || null,//item?.properties?.wiki_and_media?.image || item?.properties?.datasource?.raw?.image,
+                                    website: item.properties.website,
+                                    key: Math.random().toString()
+                                }));
+
+                            // console.log(typeof (sightItems[3].image));
+                            // console.log(typeof (sightItems[3]));
+
+                            //console.log(typeof (sightItems[0].image));
+
+                            setSight(sightItems);
+
+                            /* loadingSpinner deaktivieren */
+                            setSpinner(false);
+
+                            return json.features;
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                };
+                getSightsFromApi().then(features => {
+                    console.log(features);
+                    const featuresArray = features;
+
+                });
+                getWeatherFromApi().then(weather => {
+                    console.log(weather);
+                });
             });
-            getWeatherFromApi().then(weather => {
-                console.log(weather);
-            });
-        });
+        }
+        else{
+            //string ist leer, setze Wetter und Sights zurück und zeige nichts
+            setSight([]);
+            const weatherItems = {
+                temp_c: "0",
+                description: "No location selected",
+                image: require('../../assets/Placeholder.png')
+            };
+            setWeather([weatherItems]);
+        }
+
     }
 
 
