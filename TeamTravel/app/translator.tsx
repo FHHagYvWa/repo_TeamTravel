@@ -55,7 +55,7 @@ export default function Translator() {
                 return fetch(`https://api-free.deepl.com/v2/translate?auth_key=6b8228fb-b44e-490e-b596-6901359a65ae:fx&text=${origin_text}&source_lang=${source_lang}&target_lang=${target_lang}`)
                     .then(response => response.json())
                     .then(json => {
-                        /* Filtern und Daten setzen mit Übersetzung */
+                        /* Daten setzen mit Übersetzung */
                         const translationText = json.translations[0].text;
                         setTranslation([{ text: translationText }]);
 

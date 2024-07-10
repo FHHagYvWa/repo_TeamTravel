@@ -23,6 +23,7 @@ export const globalStyles = StyleSheet.create({
         borderBottomColor: '#ddd',
         backgroundColor: '#ddd',
         borderRadius: 15,
+        width: "90%"
     },
     translateInput: {
         textAlignVertical: 'top',
