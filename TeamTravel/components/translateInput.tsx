@@ -13,15 +13,9 @@ export default function TranslateInput (props:TranslateProps){
     //const für text in Inputfeld
     const [text, setText] = useState('');
 
-    //const für Ausgangssprache
-    const [src_lang, setSrcLang] = useState('');
-
-    //const für Zielsprache
-    const [target_lang, setTargetLang] = useState('');
-
 
     //const für select picker der Ausgangssprache
-    const [startLanguage, setStartLanguage] = useState();
+    const [startLanguage, setStartLanguage] = useState(null);
 
     //const für select picker der Zielsprache
     const [selectedLanguage, setSelectedLanguage] = useState();
@@ -64,7 +58,7 @@ export default function TranslateInput (props:TranslateProps){
                 <TextInput multiline = {true}
                            numberOfLines = {10} style={globalStyles.translateInput} placeholder={'My text...'}
                            value={text} onChangeText={setText}/>
-                <Button  title='Translate' color='#ffc50a' onPress={()=>props.submitHandler(text, src_lang, target_lang)}/>
+                <Button  title='Translate' color='#ffc50a' onPress={()=>props.submitHandler(text, startLanguage, selectedLanguage)}/>
             </View>
         </View>
 
