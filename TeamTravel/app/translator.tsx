@@ -1,5 +1,7 @@
-import {View, Text, StyleSheet, TextInput, Button, ActivityIndicator, Keyboard, SafeAreaView,
-    TouchableWithoutFeedback} from "react-native";
+import {
+    View, Text, StyleSheet, TextInput, Button, ActivityIndicator, Keyboard, SafeAreaView,
+    TouchableWithoutFeedback, ScrollView
+} from "react-native";
 import {globalStyles} from "../styles/global";
 import {useState} from "react";
 import TranslateInput from "../components/translateInput";
@@ -60,23 +62,21 @@ export default function Translator() {
 
         }
     }
-        return (
-            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-                <SafeAreaView style={styles.safe}>
+    return (
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <SafeAreaView style={styles.safe}>
+                <ScrollView>
                     <View style={styles.container}>
                         <TranslateInput submitHandler={submitHandler}/>
                         <View style={styles.translateView}>
                             <Text style={globalStyles.titleText}>Your translation:</Text>
-                            <Text style={styles.translated}>{translation}</Text>
+                            <Text style={styles.translated}>{translation[0].text}</Text>
                         </View>
                     </View>
-                </SafeAreaView>
-            </TouchableWithoutFeedback>
-        );
-
-
-
-
+                </ScrollView>
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
+    );
 
 
 }
