@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, View, Button, TextInput, SafeAreaView, TouchableWithoutFeedback, Keyboard} from 'react-native';
-import Header from "./components/header";
+
 import {globalStyles} from "./styles/global";
 
 export default function App() {
