@@ -1,12 +1,11 @@
 import {
-    View, Text, StyleSheet, TextInput, Button, ActivityIndicator, Keyboard, SafeAreaView,
+    View, Text, StyleSheet, Keyboard, SafeAreaView,
     TouchableWithoutFeedback, ScrollView, TouchableOpacity
 } from "react-native";
 import {globalStyles} from "../styles/global";
 import {useState} from "react";
 import TranslateInput from "../components/translateInput";
 import * as Speech from 'expo-speech';
-
 import {MaterialIcons} from "@expo/vector-icons";
 
 type Translation = {
@@ -14,52 +13,54 @@ type Translation = {
 }
 
 export default function Translator() {
-    //const für die Sprache bei Speech
+    // const für die Sprache bei Speech
     const [targetLanguage, setTargetLanguage] = useState("EN");
 
-    //const für Speech Ausgabe
+    // const für Speech Ausgabe
     const speak = () => {
         const thingToSay = translation[0].text;
         Speech.speak(thingToSay, {language: targetLanguage});
     };
 
+    // initialen Text setzen
     const [translation, setTranslation] = useState<Translation[]>([
         {
             text: "Translation will appear here"
         }]);
 
-    /*zeigen, dass daten gerade laden*/
+    // zeigen, dass daten gerade laden (loading)
     const [loadingSpinner, setSpinner] = useState(false);
 
-    //submit aktion für Translate button
+    // submit aktion für Translate button
     const submitHandler = (text: string, src_lang: string, trgt_lang: string) => {
 
+        // wenn textfeld nicht leer ist
         if (text != "") {
             const origin_text = text;
-            console.log(origin_text);
+            // console.log(origin_text);
 
             const source_lang = src_lang;
-            console.log(source_lang);
+            // console.log(source_lang);
 
             const target_lang = trgt_lang;
-            console.log(target_lang);
+            // console.log(target_lang);
 
-            /*show spinner*/
+            // show spinner
             setSpinner(true);
-
 
             //target language für speech setzen
             setTargetLanguage(trgt_lang);
 
+            // fetch translation from API
             const getTranslationFromApi = () => {
                 return fetch(`https://api-free.deepl.com/v2/translate?auth_key=6b8228fb-b44e-490e-b596-6901359a65ae:fx&text=${origin_text}&source_lang=${source_lang}&target_lang=${target_lang}`)
                     .then(response => response.json())
                     .then(json => {
-                        /* Daten setzen mit Übersetzung */
+                        // Daten setzen für Übersetzung
                         const translationText = json.translations[0].text;
                         setTranslation([{text: translationText}]);
 
-                        console.log(json.translations[0].text);
+                        // console.log(json.translations[0].text);
 
                     })
                     .catch(error => {
@@ -68,12 +69,10 @@ export default function Translator() {
             };
 
             getTranslationFromApi().then(translations => {
-                console.log("hahahahaa" + translations.text);
+                console.log(translations[0].text);
             });
-
         }
     }
-
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -94,9 +93,13 @@ export default function Translator() {
         </TouchableWithoutFeedback>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         padding: 24,
+    },
+    safe: {
+        flex: 1,
     },
     translated: {
         backgroundColor: '#f0e9de',
