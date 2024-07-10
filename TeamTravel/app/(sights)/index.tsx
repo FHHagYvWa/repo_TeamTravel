@@ -12,7 +12,6 @@ import {
 import {router} from "expo-router";
 import {globalStyles} from "../../styles/global";
 import {useState} from "react";
-
 import {StatusBar} from "expo-status-bar";
 
 import {navigate} from "expo-router/build/global-state/routing";
